@@ -1,6 +1,9 @@
 <template>
   <nav class="side-menu">
     <h3>Openbanking</h3>
+    <div class="w-100 d-flex flex-row-reverse">
+      <small class="mr-3 version">V{{ version }}</small>
+    </div>
     <hr>
 
     <router-link
@@ -24,12 +27,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import packageJson from '../../package.json'
 
 import { SCHEMAS } from '../store/getters-type.js'
 import { LOAD_MENU } from '../store/actions-type.js'
 
 export default {
   name: 'Menu',
+  data () {
+    return {
+      version: packageJson.version
+    }
+  },
   computed: {
     ...mapGetters({
       schemasNames: SCHEMAS
@@ -51,6 +60,10 @@ export default {
     background-color: #1f3c81;
     color: #ffffff;
     min-width: 200px;
+
+    .version {
+      color: rgba(255, 255, 255, 0.5);
+    }
 
     h1, h2, h3, h4 {
       color: #ffffff;
