@@ -1,0 +1,117 @@
+<template>
+  <div class="container">
+    <h1>Schema Configuration</h1>
+    <p>Map the schema fields with the right entity name</p>
+
+    <form @submit.prevent="save()" class="form mt-5 col-6 offset-3">
+      <div class="form-group" v-for="field in fields" :key="field.name">
+        <label :for="field.name">{{ field.name }}</label>
+        <input
+          :id="field.name"
+          :name="field.name"
+          type="text"
+          class="form-control"
+          v-model="field.type"
+        >
+      </div>
+
+      <div class="form-group d-flex mb-5">
+        <router-link :to="{ name:'Home' }" class="btn btn-danger w-100 mr-1">Cancel</router-link>
+        <button type="submit" class="btn btn-success w-100 ml-1">Create Schema</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+import { mapMutations } from 'vuex'
+
+import { ADD_SCHEMA_MENU } from '../store/mutations-type.js'
+
+export default {
+  name: 'SchemaConfiguration',
+  props: {
+    schema: {
+      type: Object,
+      require: true
+    }
+  },
+  data () {
+    return {
+      fields: []
+    }
+  },
+  mounted () {
+    const structure = this.$route.params.schema.structure
+
+    this.fields = this.filterObjectsFields(structure)
+  },
+  methods: {
+    ...mapMutations({
+      addSchema: ADD_SCHEMA_MENU
+    }),
+    async save () {
+      for (const f of this.fields) {
+        const field = f.name.split('.').reduce((a, v) => a[v], this.schema.structure)
+        field.fieldType = f.type
+      }
+
+      await axios.post('http://localhost:3001/api/schemas', this.schema)
+      this.addSchema({
+        name: this.schema.name
+      })
+      this.$router.push({
+        name: 'SchemaViewer',
+        params: {
+          name: this.schema.name
+        }
+      })
+    },
+
+    filterObjectsFields (obj) {
+      const result = []
+      const entries = Object.entries(obj)
+
+      for (const [key, value] of entries) {
+        if (this.isFieldType(value)) {
+          continue
+        }
+
+        if (this.isObjectField(value)) {
+          result.push(this.createField(key, value.fieldType))
+        }
+
+        if (this.existsSubfields(value)) {
+          const fields = this.mapSubfields({ key, value })
+          result.push(...fields)
+        }
+      }
+      return result
+    },
+
+    isFieldType (key) {
+      return key === 'fieldType'
+    },
+
+    isObjectField (value) {
+      return value.fieldType === 'Object' ||
+             value.fieldType === 'Enum' ||
+             value.fieldType === 'List'
+    },
+
+    createField (name, type) {
+      return { name, type }
+    },
+
+    existsSubfields (value) {
+      return value.fieldType === 'Object' || value.fieldType === 'List'
+    },
+
+    mapSubfields ({ key, value }) {
+      return this.filterObjectsFields(value)
+        .map(f => this.createField(`${key}.${f.name}`, f.type))
+    }
+  }
+}
+</script>
