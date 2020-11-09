@@ -57,7 +57,7 @@ export default {
         field.fieldType = f.type
       }
 
-      await axios.post('http://localhost:3001/api/schemas', this.schema)
+      await axios.post('api/schemas', this.schema)
       this.addSchema({
         name: this.schema.name
       })

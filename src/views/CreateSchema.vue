@@ -64,7 +64,7 @@ export default {
   methods: {
     async proccessFile (schema) {
       this.formData.set('name', this.schemaName)
-      const response = await axios.post('http://localhost:3001/api/schemas/process-file', this.formData)
+      const response = await axios.post('api/schemas/process-file', this.formData)
       this.$router.push({
         name: 'SchemaConfiguration',
         params: {

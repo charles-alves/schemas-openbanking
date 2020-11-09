@@ -5,7 +5,7 @@ import { SET_SCHEMA_MENU } from './mutations-type.js'
 
 export const actions = {
   async [LOAD_MENU] ({ commit }) {
-    const response = await axios.get('http://localhost:3001/api/schemas')
+    const response = await axios.get('api/schemas')
     commit(SET_SCHEMA_MENU, response.data)
   }
 }

@@ -29,14 +29,14 @@ export default {
     }
   },
   async beforeRouteEnter (to, from, next) {
-    const response = await axios.get(`http://localhost:3001/api/schemas/${to.params.name}`)
+    const response = await axios.get(`api/schemas/${to.params.name}`)
 
     next(vm => {
       vm.schema = response.data.structure
     })
   },
   async beforeRouteUpdate (to, from, next) {
-    const response = await axios.get(`http://localhost:3001/api/schemas/${to.params.name}`)
+    const response = await axios.get(`api/schemas/${to.params.name}`)
 
     this.schema = response.data.structure
     next()
