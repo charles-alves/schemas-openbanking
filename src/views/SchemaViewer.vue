@@ -13,12 +13,13 @@
 
 <script>
 import SshPre from 'simple-syntax-highlighter'
-import axios from 'axios'
 
 import 'simple-syntax-highlighter/dist/sshpre.css'
 
 import SchemaViewerBreadcrumb from './SchemaViewerBreadcrumb.vue'
 import SchemaViewerFields from './SchemaViewerFields.vue'
+import store from '../store/index.js'
+import { LOAD_SCHEMA } from '../store/actions-type.js'
 
 export default {
   name: 'SchemaViewer',
@@ -42,17 +43,13 @@ export default {
     }
   },
   async beforeRouteEnter (to, from, next) {
-    const response = await axios.get(`api/schemas/${to.params.name}`)
-    const fields = to.params.fields ? to.params.fields.split('/') : []
-    const schema = fields.reduce((a, v) => { return a[v] }, response.data.structure)
+    const schema = await store.dispatch(LOAD_SCHEMA, to.params)
     next(vm => {
       vm.schema = schema
     })
   },
   async beforeRouteUpdate (to, from, next) {
-    const response = await axios.get(`api/schemas/${to.params.name}`)
-    const fields = to.params.fields ? to.params.fields.split('/') : []
-    this.schema = fields.reduce((a, v) => { return a[v] }, response.data.structure)
+    this.schema = await store.dispatch(LOAD_SCHEMA, to.params)
     next()
   }
 }
