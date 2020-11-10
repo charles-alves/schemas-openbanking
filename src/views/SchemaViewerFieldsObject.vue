@@ -11,15 +11,23 @@
       <tbody>
         <tr v-for="(value, key) in fields" :key="key">
           <td>
-            <router-link v-if="hasSubfields(value)"
-              :to="{
-                name: 'SchemaViewerFields',
-                params: {
-                  name: $route.params.name,
-                  fields: fieldsParams(key)
-                }
-              }">{{ key }}</router-link>
-            <span v-else>{{ key }}</span>
+            <div class="d-flex">
+              <router-link v-if="hasSubfields(value)"
+                :to="{
+                  name: 'SchemaViewerFields',
+                  params: {
+                    name: $route.params.name,
+                    fields: fieldsParams(key)
+                  }
+                }">{{ key }}</router-link>
+              <span v-else>{{ key }}</span>
+              <b-icon-exclamation-triangle-fill
+                v-if="value.observation"
+                variant="warning"
+                font-scale="0.7"
+                v-b-popover.hover.bottom="value.observation"
+              />
+            </div>
           </td>
           <td>{{ value.fieldType }}</td>
           <td>{{ value.required }}</td>
