@@ -26,6 +26,11 @@ const routes = [
     path: '/schemas/:name',
     name: 'SchemaViewer',
     component: () => import(/* webpackCunkName: "schema-viewer" */ '../views/SchemaViewer.vue')
+  },
+  {
+    path: '/schemas/:name/:fields*',
+    name: 'SchemaViewerFields',
+    component: () => import(/* webpackCunkName: "schema-viewer" */ '../views/SchemaViewer.vue')
   }
 ]
 

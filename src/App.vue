@@ -29,7 +29,7 @@ export default {
     margin-right: 0 !important;
   }
 
-  body {
+  body, p, table {
     color:  rgb(140, 140, 140) !important;
   }
 </style>
