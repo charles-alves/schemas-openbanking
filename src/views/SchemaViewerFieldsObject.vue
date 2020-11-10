@@ -26,6 +26,7 @@
                 variant="warning"
                 font-scale="0.7"
                 v-b-popover.hover.bottom="value.observation"
+                class="pointer"
               />
             </div>
           </td>
