@@ -97,7 +97,8 @@ export default {
     isObjectField (value) {
       return value.fieldType === 'Object' ||
              value.fieldType === 'Enum' ||
-             value.fieldType === 'List'
+             value.fieldType === 'List' ||
+             value.fieldType === 'Field'
     },
 
     createField (name, type) {
