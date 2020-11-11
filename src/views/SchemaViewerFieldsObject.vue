@@ -73,7 +73,9 @@ export default {
     },
 
     hasSubfields (value) {
-      return !value.fieldType.includes('String') && !value.fieldType.includes('Enum')
+      return !value.fieldType.includes('String') &&
+        !value.fieldType.includes('boolean') &&
+        !value.fieldType === 'Field'
     }
   }
 }
