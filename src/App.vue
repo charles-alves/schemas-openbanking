@@ -32,4 +32,8 @@ export default {
   body, p, table {
     color:  rgb(140, 140, 140) !important;
   }
+
+  .pointer {
+    cursor: pointer;
+  }
 </style>
