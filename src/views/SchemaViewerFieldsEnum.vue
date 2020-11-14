@@ -19,11 +19,14 @@ export default {
     }
   },
   computed: {
+    meta () {
+      return this.schema.meta
+    },
     enumName () {
-      return /Enum<(\w+)>/.exec(this.schema.fieldType)[1]
+      return /Enum<(\w+)>/.exec(this.meta.fieldType)[1]
     },
     enumFields () {
-      return this.schema.allowedValues.join(',\n  ')
+      return this.meta.allowedValues.join(',\n  ')
     },
     enumStr () {
       return `enum ${this.enumName} {

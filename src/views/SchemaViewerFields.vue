@@ -18,13 +18,17 @@ export default {
     }
   },
   computed: {
+    fieldType () {
+      const meta = this.schema.meta
+      return meta !== undefined ? meta.fieldType : null
+    },
+
     title () {
-      return this.schema.fieldType || 'Schema'
+      return this.fieldType || 'Schema'
     },
 
     isEnumField () {
-      const fieldType = this.schema.fieldType
-      return fieldType !== undefined && fieldType.includes('Enum')
+      return this.fieldType !== null && this.fieldType.includes('Enum')
     },
 
     schemaView () {

@@ -53,8 +53,9 @@ export default {
     }),
     async save () {
       for (const f of this.fields) {
-        const field = f.name.split('.').reduce((a, v) => a[v], this.schema.structure)
-        field.fieldType = f.type
+        const field = f.name.split('.')
+          .reduce((a, v) => a[v], this.schema.structure)
+        field.meta.fieldType = f.type
       }
 
       await axios.post('api/schemas', this.schema)
@@ -72,14 +73,11 @@ export default {
     filterObjectsFields (obj) {
       const result = []
       const entries = Object.entries(obj)
+        .filter(([k]) => k !== 'meta')
 
       for (const [key, value] of entries) {
-        if (this.isFieldType(value)) {
-          continue
-        }
-
         if (this.isObjectField(value)) {
-          result.push(this.createField(key, value.fieldType))
+          result.push(this.createField(key, value.meta.fieldType))
         }
 
         if (this.existsSubfields(value)) {
@@ -90,15 +88,13 @@ export default {
       return result
     },
 
-    isFieldType (key) {
-      return key === 'fieldType'
-    },
-
     isObjectField (value) {
-      return value.fieldType === 'Object' ||
-             value.fieldType === 'Enum' ||
-             value.fieldType === 'List' ||
-             value.fieldType === 'Field'
+      const fields = this.getFields(value)
+      return (
+        fields.length !== 0 ||
+        value.meta.fieldType === 'Enum' ||
+        value.meta.fieldType === 'Field'
+      )
     },
 
     createField (name, type) {
@@ -106,7 +102,13 @@ export default {
     },
 
     existsSubfields (value) {
-      return value.fieldType === 'Object' || value.fieldType === 'List'
+      const fields = this.getFields(value)
+      return fields.length !== 0
+    },
+
+    getFields (value) {
+      return Object.keys(value)
+        .filter(k => k !== 'meta')
     },
 
     mapSubfields ({ key, value }) {

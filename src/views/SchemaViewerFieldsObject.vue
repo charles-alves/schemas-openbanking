@@ -22,17 +22,17 @@
                 }">{{ key }}</router-link>
               <span v-else>{{ key }}</span>
               <b-icon-exclamation-triangle-fill
-                v-if="value.observation"
+                v-if="value.meta.observation"
                 variant="warning"
                 font-scale="0.7"
-                v-b-popover.hover.bottom="value.observation"
+                v-b-popover.hover.bottom="value.meta.observation"
                 class="pointer"
               />
             </div>
           </td>
-          <td>{{ value.fieldType }}</td>
-          <td>{{ value.required }}</td>
-          <td>{{ value.description }}</td>
+          <td>{{ value.meta.fieldType }}</td>
+          <td>{{ value.meta.required }}</td>
+          <td>{{ value.meta.description }}</td>
         </tr>
       </tbody>
     </table>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: '',
+  name: 'SchemaViewerFieldsObject',
   props: {
     schema: {
       type: Object,
@@ -50,11 +50,9 @@ export default {
   computed: {
     fields () {
       return Object.entries(this.schema)
+        .filter(([k]) => k !== 'meta')
         .reduce((a, [k, v]) => {
-          if (k !== 'fieldType') {
-            a[k] = v
-          }
-
+          a[k] = v
           return a
         }, {})
     },
@@ -73,9 +71,9 @@ export default {
     },
 
     hasSubfields (value) {
-      return !value.fieldType.includes('String') &&
-        !value.fieldType.includes('boolean') &&
-        value.fieldType !== 'Field'
+      const fields = Object.keys(value)
+        .filter(k => k !== 'meta')
+      return fields.length !== 0 || value.meta.fieldType.includes('Enum')
     }
   }
 }
