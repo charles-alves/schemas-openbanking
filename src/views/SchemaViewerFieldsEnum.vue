@@ -26,7 +26,9 @@ export default {
       return /Enum<(\w+)>/.exec(this.meta.fieldType)[1]
     },
     enumFields () {
-      return this.meta.allowedValues.join(',\n  ')
+      return this.meta.allowedValues
+        .map(e => e.value || e)
+        .join(',\n  ')
     },
     enumStr () {
       return `enum ${this.enumName} {
