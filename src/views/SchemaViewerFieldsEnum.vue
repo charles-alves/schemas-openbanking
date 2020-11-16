@@ -1,16 +1,26 @@
 <template>
-  <ssh-pre language="javascript" :label="enumName" :reactive="true">
-    {{ enumStr }}
-  </ssh-pre>
+  <div>
+    <ssh-pre
+      language="javascript"
+      :label="enumName"
+      class="mb-2"
+    >
+      {{ enumStr }}
+    </ssh-pre>
+    <SchemaViewerFieldsLeaf :schema="schema" />
+  </div>
 </template>
 
 <script>
 import SshPre from 'simple-syntax-highlighter'
 
+import SchemaViewerFieldsLeaf from './SchemaViewerFieldsLeaf.vue'
+
 export default {
   name: 'SchemaViewerFieldsEnum',
   components: {
-    SshPre
+    SshPre,
+    SchemaViewerFieldsLeaf
   },
   props: {
     schema: {

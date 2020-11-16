@@ -12,7 +12,7 @@
         <tr v-for="(value, key) in fields" :key="key">
           <td>
             <div class="d-flex">
-              <router-link v-if="hasSubfields(value)"
+              <router-link
                 :to="{
                   name: 'SchemaViewerFields',
                   params: {
@@ -20,7 +20,6 @@
                     fields: fieldsParams(key)
                   }
                 }">{{ key }}</router-link>
-              <span v-else>{{ key }}</span>
               <b-icon-exclamation-triangle-fill
                 v-if="value.meta.observation"
                 variant="warning"
@@ -68,12 +67,6 @@ export default {
   methods: {
     fieldsParams (value) {
       return [...this.fieldsRouteParams, value].join('/')
-    },
-
-    hasSubfields (value) {
-      const fields = Object.keys(value)
-        .filter(k => k !== 'meta')
-      return fields.length !== 0 || value.meta.fieldType.includes('Enum')
     }
   }
 }

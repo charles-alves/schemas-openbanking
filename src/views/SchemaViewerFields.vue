@@ -45,6 +45,7 @@ import 'simple-syntax-highlighter/dist/sshpre.css'
 
 import SchemaViewerFieldsObject from './SchemaViewerFieldsObject.vue'
 import SchemaViewerFieldsEnum from './SchemaViewerFieldsEnum'
+import SchemaViewerFieldsLeaf from './SchemaViewerFieldsLeaf.vue'
 
 export default {
   name: 'SchemaViewerFields.vue',
@@ -79,7 +80,10 @@ export default {
       if (this.isEnumField) {
         return SchemaViewerFieldsEnum
       }
-      return SchemaViewerFieldsObject
+      if (this.fieldType === null || Object.keys(this.schema).length > 1) {
+        return SchemaViewerFieldsObject
+      }
+      return SchemaViewerFieldsLeaf
     },
 
     jsonUrl () {
