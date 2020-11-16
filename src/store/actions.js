@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { LOAD_MENU, LOAD_SCHEMA } from './actions-type.js'
-import { SET_SCHEMA_MENU, SET_SCHEMA } from './mutations-type.js'
+import { SET_SCHEMA_MENU, SET_SCHEMA, SET_RESPONSE } from './mutations-type.js'
 
 export const actions = {
   async [LOAD_MENU] ({ commit }) {
@@ -11,10 +11,17 @@ export const actions = {
 
   async [LOAD_SCHEMA] ({ state, commit }, params) {
     if (state.schema === null || state.schema.name !== params.name) {
-      const response = await axios.get(`api/schemas/${params.name}`)
+      const schemaPromise = axios.get(`api/schemas/${params.name}`)
+      const jsonPromise = axios.get(`api/schemas/${params.name}/json`)
 
-      if (response.status === 200) {
-        commit(SET_SCHEMA, response.data)
+      const [schemaResponse, jsonResponse] = await Promise.all([schemaPromise, jsonPromise])
+
+      if (schemaResponse.status === 200) {
+        commit(SET_SCHEMA, schemaResponse.data)
+      }
+
+      if (jsonResponse.status === 200) {
+        commit(SET_RESPONSE, jsonResponse.data)
       }
     }
 

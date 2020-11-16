@@ -1,7 +1,8 @@
 import {
   ADD_SCHEMA_MENU,
   SET_SCHEMA_MENU,
-  SET_SCHEMA
+  SET_SCHEMA,
+  SET_RESPONSE
 } from './mutations-type'
 
 export const mutations = {
@@ -15,5 +16,9 @@ export const mutations = {
 
   [SET_SCHEMA] (state, schema) {
     state.schema = schema
+  },
+
+  [SET_RESPONSE] (state, json) {
+    state.response = json
   }
 }

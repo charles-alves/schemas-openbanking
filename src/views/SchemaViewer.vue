@@ -4,18 +4,10 @@
     <SchemaViewerBreadcrumb />
     <SchemaViewerFields :schema="schema"/>
     <hr>
-
-    <ssh-pre language="json" :label="title" :reactive="true">
-      {{ schema }}
-    </ssh-pre>
   </div>
 </template>
 
 <script>
-import SshPre from 'simple-syntax-highlighter'
-
-import 'simple-syntax-highlighter/dist/sshpre.css'
-
 import SchemaViewerBreadcrumb from './SchemaViewerBreadcrumb.vue'
 import SchemaViewerFields from './SchemaViewerFields.vue'
 import store from '../store/index.js'
@@ -24,7 +16,6 @@ import { LOAD_SCHEMA } from '../store/actions-type.js'
 export default {
   name: 'SchemaViewer',
   components: {
-    SshPre,
     SchemaViewerBreadcrumb,
     SchemaViewerFields
   },

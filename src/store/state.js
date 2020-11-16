@@ -1,4 +1,5 @@
 export const state = {
   schemasMenu: [],
-  schema: null
+  schema: null,
+  response: null
 }
