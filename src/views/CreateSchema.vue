@@ -32,7 +32,7 @@
             for="structure"
             aria-describedby="structure"
           >
-            Choose your schema file
+            {{ filePlaceholder}}
           </label>
         </div>
       </div>
@@ -58,13 +58,20 @@ export default {
   data () {
     return {
       schemaName: '',
-      formData: new FormData()
+      file: null
+    }
+  },
+  computed: {
+    filePlaceholder () {
+      return this.file !== null ? this.file.name : 'Choose your schema file'
     }
   },
   methods: {
     async proccessFile (schema) {
-      this.formData.set('name', this.schemaName)
-      const response = await axios.post('api/schemas/process-file', this.formData)
+      const formData = new FormData()
+      formData.set('name', this.schemaName)
+      formData.set('structure', this.file)
+      const response = await axios.post('api/schemas/process-file', formData)
       this.$router.push({
         name: 'SchemaConfiguration',
         params: {
@@ -74,7 +81,7 @@ export default {
       })
     },
     filesChange (fieldName, fileList) {
-      this.formData.set(fieldName, fileList[0])
+      this.file = fileList[0]
     }
   }
 }
