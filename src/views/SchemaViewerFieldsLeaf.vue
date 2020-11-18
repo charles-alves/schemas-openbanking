@@ -2,7 +2,7 @@
   <table class="table mt-3">
     <tbody>
       <tr v-for="(value, key) in meta" :key="key">
-        <th>{{ key }}</th>
+        <th>{{ $t(`app.metaFields.${key}`)}}</th>
         <td class="value">{{ value }}</td>
       </tr>
     </tbody>

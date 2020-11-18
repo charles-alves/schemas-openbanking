@@ -25,7 +25,7 @@
           JSON
         </template>
         <p class="mt-4 ml-3">
-          To access this JSON directly click or copy the link below:
+          {{ $t('views.schemaViewerFields.description') }}
           <br>
           <a :href="jsonUrl" target="_blank">{{ jsonUrl }}</a>
         </p>

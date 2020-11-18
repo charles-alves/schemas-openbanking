@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h1>Schema Configuration</h1>
-    <p>Map the schema fields with the right entity name</p>
+    <h1>{{ $t('forms.schemaConfiguration.title') }}</h1>
+    <p>{{ $t('forms.schemaConfiguration.description') }}</p>
 
     <form @submit.prevent="save()" class="form mt-5 col-6 offset-3">
       <div class="form-group" v-for="field in fields" :key="field.name">
@@ -16,8 +16,12 @@
       </div>
 
       <div class="form-group d-flex mb-5">
-        <router-link :to="{ name:'Home' }" class="btn btn-danger w-100 mr-1">Cancel</router-link>
-        <button type="submit" class="btn btn-success w-100 ml-1">Create Schema</button>
+        <router-link :to="{ name:'Home' }" class="btn btn-danger w-100 mr-1">
+          {{ $t('app.forms.buttons.cancel') }}
+        </router-link>
+        <button type="submit" class="btn btn-success w-100 ml-1">
+          {{ $t('forms.schemaConfiguration.buttons.createSchema') }}
+        </button>
       </div>
     </form>
   </div>

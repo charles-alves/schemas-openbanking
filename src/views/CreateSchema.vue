@@ -1,23 +1,25 @@
 <template>
   <div class="content">
-    <h1>Create Schema</h1>
-    <p>Here you can upload a new CSV file with the new schema structure</p>
+    <h1>{{ $t('forms.createSchema.title') }}</h1>
+    <p>{{ $t('forms.createSchema.description') }}</p>
 
     <form @submit.prevent="proccessFile()" class="form col-6 offset-3 mt-5">
       <div class="form-group">
-        <label for="name">Name:</label>
+        <label for="name" class="text-capitalize">{{ $t('app.forms.name') }}</label>
         <input
           id="name"
           name="name"
           type="text"
           class="form-control"
-          placeholder="Schema Name"
+          :placeholder="$t('app.forms.namePlaceholder')"
           v-model="schemaName"
         >
       </div>
 
       <div class="form-group">
-        <label for="structure">Structure</label>
+        <label for="structure" class="text-capitalize">
+          {{ $t('app.forms.structure') }}
+        </label>
         <div class="custom-file">
           <input
             id="structure"
@@ -41,11 +43,16 @@
         <router-link
           :to="{ name: 'Home' }"
           type="button"
-          class="btn btn-danger w-100 mr-1"
+          class="btn btn-danger w-100 mr-1 text-capitalize"
         >
-          Cancel
+          {{ $t('app.forms.buttons.cancel') }}
         </router-link>
-        <button type="submit" class="btn btn-success w-100 ml-1">Next</button>
+        <button
+          type="submit"
+          class="btn btn-success w-100 ml-1 text-capitalize"
+        >
+          {{ $t('app.forms.buttons.next') }}
+        </button>
       </div>
     </form>
   </div>
@@ -63,7 +70,7 @@ export default {
   },
   computed: {
     filePlaceholder () {
-      return this.file !== null ? this.file.name : 'Choose your schema file'
+      return this.file !== null ? this.file.name : this.$t('forms.createSchema.filePlaceholder')
     }
   },
   methods: {

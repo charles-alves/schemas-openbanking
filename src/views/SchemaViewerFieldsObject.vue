@@ -2,10 +2,10 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Required</th>
-          <th>description</th>
+          <th class="text-capitalize">{{ $t('app.forms.name') }}</th>
+          <th>{{ $t('app.metaFields.fieldType') }}</th>
+          <th>{{ $t('app.metaFields.required') }}</th>
+          <th>{{ $t('app.metaFields.description') }}</th>
         </tr>
       </thead>
       <tbody>

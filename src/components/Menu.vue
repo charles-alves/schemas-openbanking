@@ -1,6 +1,6 @@
 <template>
   <nav class="side-menu">
-    <h3>Openbanking</h3>
+    <h3>{{ $t('app.title') }}</h3>
     <div class="w-100 d-flex flex-row-reverse">
       <small class="mr-3 version">V{{ version }}</small>
     </div>
@@ -10,7 +10,7 @@
       :to="{ name: 'CreateSchema' }"
       class="btn btn-primary mb-3 mr-2 ml-2"
     >
-      Create Schema
+      {{ $t('menu.buttonCreate') }}
     </router-link>
 
     <ul class="list-unstyled">
