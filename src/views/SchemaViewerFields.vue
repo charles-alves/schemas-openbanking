@@ -48,7 +48,7 @@ import SchemaViewerFieldsEnum from './SchemaViewerFieldsEnum'
 import SchemaViewerFieldsLeaf from './SchemaViewerFieldsLeaf.vue'
 
 export default {
-  name: 'SchemaViewerFields.vue',
+  name: 'SchemaViewerFields',
   components: {
     SshPre
   },
@@ -64,8 +64,7 @@ export default {
     ]),
 
     fieldType () {
-      const meta = this.schema.meta
-      return meta !== undefined ? meta.fieldType : null
+      return this.schema.meta?.fieldType || null
     },
 
     title () {

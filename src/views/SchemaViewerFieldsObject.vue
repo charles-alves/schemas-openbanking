@@ -57,11 +57,7 @@ export default {
     },
 
     fieldsRouteParams () {
-      if (this.$route.params.fields !== undefined) {
-        return this.$route.params.fields.split('/')
-      }
-
-      return []
+      return this.$route.params.fields?.split('/') || []
     }
   },
   methods: {

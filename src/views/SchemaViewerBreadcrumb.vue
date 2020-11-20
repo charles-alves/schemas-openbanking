@@ -43,7 +43,7 @@ export default {
   name: 'SchemaViewerBreadcrumb',
   computed: {
     fields () {
-      return this.$route.params.fields ? this.$route.params.fields.split('/') : []
+      return this.$route.params.fields?.split('/') || []
     },
     navigation () {
       const navigation = []

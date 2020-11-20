@@ -30,8 +30,7 @@ export default {
     },
 
     title () {
-      const meta = this.schema.meta
-      return meta !== undefined ? meta.fieldType : 'Schema'
+      return this.schema.meta?.fieldType || 'Schema'
     }
   },
   async beforeRouteEnter (to, from, next) {
