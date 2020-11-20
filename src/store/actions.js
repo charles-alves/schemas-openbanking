@@ -10,14 +10,14 @@ export const actions = {
   },
 
   async [LOAD_SCHEMA] ({ state, commit }, params) {
-    if (state.schema === null || state.schema.name !== params.name) {
+    if (state.schema[params.name] === undefined) {
       const schemaPromise = axios.get(`api/schemas/${params.name}`)
       const jsonPromise = axios.get(`api/schemas/${params.name}/json`)
 
       const [schemaResponse, jsonResponse] = await Promise.all([schemaPromise, jsonPromise])
 
       if (schemaResponse.status === 200) {
-        commit(SET_SCHEMA, schemaResponse.data)
+        commit(SET_SCHEMA, { name: params.name, data: schemaResponse.data })
       }
 
       if (jsonResponse.status === 200) {
@@ -26,6 +26,6 @@ export const actions = {
     }
 
     const fields = params.fields ? params.fields.split('/') : []
-    return fields.reduce((a, v) => { return a[v] }, state.schema.structure)
+    return fields.reduce((a, v) => { return a[v] }, state.schema[params.name].structure)
   }
 }
