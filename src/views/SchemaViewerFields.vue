@@ -25,7 +25,7 @@
           JSON
         </template>
         <p class="mt-4 ml-3">
-          To access this JSON directly click or copy the link below:
+          {{ $t('views.schemaViewerFields.description') }}
           <br>
           <a :href="jsonUrl" target="_blank">{{ jsonUrl }}</a>
         </p>
@@ -45,9 +45,10 @@ import 'simple-syntax-highlighter/dist/sshpre.css'
 
 import SchemaViewerFieldsObject from './SchemaViewerFieldsObject.vue'
 import SchemaViewerFieldsEnum from './SchemaViewerFieldsEnum'
+import SchemaViewerFieldsLeaf from './SchemaViewerFieldsLeaf.vue'
 
 export default {
-  name: 'SchemaViewerFields.vue',
+  name: 'SchemaViewerFields',
   components: {
     SshPre
   },
@@ -63,8 +64,7 @@ export default {
     ]),
 
     fieldType () {
-      const meta = this.schema.meta
-      return meta !== undefined ? meta.fieldType : null
+      return this.schema.meta?.fieldType || null
     },
 
     title () {
@@ -79,7 +79,10 @@ export default {
       if (this.isEnumField) {
         return SchemaViewerFieldsEnum
       }
-      return SchemaViewerFieldsObject
+      if (this.fieldType === null || Object.keys(this.schema).length > 1) {
+        return SchemaViewerFieldsObject
+      }
+      return SchemaViewerFieldsLeaf
     },
 
     jsonUrl () {

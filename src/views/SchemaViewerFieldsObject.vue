@@ -2,17 +2,17 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Required</th>
-          <th>description</th>
+          <th class="text-capitalize">{{ $t('app.forms.name') }}</th>
+          <th>{{ $t('app.metaFields.fieldType') }}</th>
+          <th>{{ $t('app.metaFields.required') }}</th>
+          <th>{{ $t('app.metaFields.description') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(value, key) in fields" :key="key">
           <td>
             <div class="d-flex">
-              <router-link v-if="hasSubfields(value)"
+              <router-link
                 :to="{
                   name: 'SchemaViewerFields',
                   params: {
@@ -20,7 +20,6 @@
                     fields: fieldsParams(key)
                   }
                 }">{{ key }}</router-link>
-              <span v-else>{{ key }}</span>
               <b-icon-exclamation-triangle-fill
                 v-if="value.meta.observation"
                 variant="warning"
@@ -58,22 +57,12 @@ export default {
     },
 
     fieldsRouteParams () {
-      if (this.$route.params.fields !== undefined) {
-        return this.$route.params.fields.split('/')
-      }
-
-      return []
+      return this.$route.params.fields?.split('/') || []
     }
   },
   methods: {
     fieldsParams (value) {
       return [...this.fieldsRouteParams, value].join('/')
-    },
-
-    hasSubfields (value) {
-      const fields = Object.keys(value)
-        .filter(k => k !== 'meta')
-      return fields.length !== 0 || value.meta.fieldType.includes('Enum')
     }
   }
 }

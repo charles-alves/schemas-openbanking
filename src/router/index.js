@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import { loadLanguage } from '../setup/i18n-setup'
+
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -38,6 +40,12 @@ const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  const lang = (navigator.language || navigator.userLanguage).replace('-', '_')
+  await loadLanguage(lang)
+  next()
 })
 
 export default router

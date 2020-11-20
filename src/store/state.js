@@ -1,5 +1,5 @@
 export const state = {
-  schemasMenu: [],
-  schema: null,
+  schemasMenu: null,
+  schema: {},
   response: null
 }
