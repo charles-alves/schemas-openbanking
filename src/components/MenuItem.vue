@@ -49,10 +49,10 @@ export default {
 
 <style lang="scss" scoped>
   $font-color: #fff;
-  $selected-menu-item: #2b6499;
-  $second-level-bg: #1d7fbe;
-  $actived-page-bg: #00ceff;
-  $menu-item-hover-bg: #01e9ff;
+  $second-level-bg: #13254F;
+  $selected-menu-item: #3261CF;
+  $actived-page-bg: #708CCF;
+  $menu-item-hover-bg: #516697;
 
   a {
     text-decoration: none !important;
